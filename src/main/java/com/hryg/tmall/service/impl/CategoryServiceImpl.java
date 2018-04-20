@@ -15,6 +15,6 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public List<Category> list() {
-        return null;
+        return categoryMapper.list();
     }
 }
