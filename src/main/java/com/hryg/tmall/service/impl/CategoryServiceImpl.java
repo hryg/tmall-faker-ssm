@@ -3,6 +3,7 @@ package com.hryg.tmall.service.impl;
 import com.hryg.tmall.mapper.CategoryMapper;
 import com.hryg.tmall.pojo.Category;
 import com.hryg.tmall.service.CategoryService;
+import com.hryg.tmall.util.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +15,12 @@ public class CategoryServiceImpl implements CategoryService {
     CategoryMapper categoryMapper;
 
     @Override
-    public List<Category> list() {
-        return categoryMapper.list();
+    public List<Category> list(Page page) {
+        return categoryMapper.list(page);
+    }
+
+    @Override
+    public int total() {
+        return categoryMapper.total();
     }
 }
