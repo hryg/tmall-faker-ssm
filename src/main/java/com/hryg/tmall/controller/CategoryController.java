@@ -2,12 +2,19 @@ package com.hryg.tmall.controller;
 
 import com.hryg.tmall.pojo.Category;
 import com.hryg.tmall.service.CategoryService;
+import com.hryg.tmall.util.ImageUtil;
 import com.hryg.tmall.util.Page;
+import com.hryg.tmall.util.UploadedImageFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.imageio.ImageIO;
+import javax.servlet.http.HttpSession;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -27,5 +34,19 @@ public class CategoryController {
         model.addAttribute("categories", categories);
         model.addAttribute("page", page);
         return "admin/listCategory";
+    }
+
+    @RequestMapping("admin_category_add")
+    public String add(Category category, HttpSession session, UploadedImageFile uploadedImageFile) throws IOException {
+        categoryService.add(category);
+        File imageFolder = new File(session.getServletContext().getRealPath("img/category"));
+        File file = new File(imageFolder, category.getId() + ".jpg");
+        if (!file.getParentFile().exists()) {
+            file.getParentFile().mkdir();
+        }
+        uploadedImageFile.getImage().transferTo(file);
+        BufferedImage img = ImageUtil.change2jpg(file);
+        ImageIO.write(img, "jpg", file);
+        return "redirect:/admin_category_list";
     }
 }
