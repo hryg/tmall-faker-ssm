@@ -6,9 +6,11 @@ import com.hryg.tmall.util.Page;
 import java.util.List;
 
 public interface CategoryService {
-    List<Category> list(Page page);
+//    List<Category> list(Page page);
 
-    int total();
+//    int total();
+
+    List<Category> list();
 
     void add(Category category);
 
