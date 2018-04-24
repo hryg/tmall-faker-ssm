@@ -57,7 +57,7 @@
                     </td>
                     <td><a href="admin_category_edit?id=${category.id}"><span class="glyphicon glyphicon-edit"></span></a></td>
                     <td><a deleteLink="true" href="admin_category_delete?id=${category.id}"><span
-                            class="   glyphicon glyphicon-trash"></span></a></td>
+                            class="glyphicon glyphicon-trash"></span></a></td>
                 </tr>
             </c:forEach>
             </tbody>

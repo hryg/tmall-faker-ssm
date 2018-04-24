@@ -15,4 +15,7 @@
     <insert id="add" keyProperty="id" useGeneratedKeys="true">
         INSERT INTO category (name) VALUES (#{name})
     </insert>
+    <delete id="delete">
+        DELETE FROM category WHERE id=#{id}
+    </delete>
 </mapper>
