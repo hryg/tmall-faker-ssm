@@ -2,6 +2,7 @@ package com.hryg.tmall.pojo;
 
 public class Category {
     private Integer id;
+
     private String name;
 
     public Integer getId() {
@@ -17,6 +18,6 @@ public class Category {
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.name = name == null ? null : name.trim();
     }
 }

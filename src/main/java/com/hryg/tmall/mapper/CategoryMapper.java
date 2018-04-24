@@ -1,25 +1,21 @@
 package com.hryg.tmall.mapper;
 
 import com.hryg.tmall.pojo.Category;
-import com.hryg.tmall.util.Page;
-
+import com.hryg.tmall.pojo.CategoryExample;
 import java.util.List;
 
-/**
- * @author hryg
- */
 public interface CategoryMapper {
-//    List<Category> list(Page page);
+    int deleteByPrimaryKey(Integer id);
 
-//    int total();
+    int insert(Category record);
 
-    List<Category> list();
+    int insertSelective(Category record);
 
-    void add(Category category);
+    List<Category> selectByExample(CategoryExample example);
 
-    void delete(int id);
+    Category selectByPrimaryKey(Integer id);
 
-    Category get(int id);
+    int updateByPrimaryKeySelective(Category record);
 
-    void update(Category category);
+    int updateByPrimaryKey(Category record);
 }
