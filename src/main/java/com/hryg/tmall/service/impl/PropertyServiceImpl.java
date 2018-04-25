@@ -26,7 +26,7 @@ public class PropertyServiceImpl implements PropertyService {
 
     @Override
     public void update(Property property) {
-        propertyMapper.updateByPrimaryKey(property);
+        propertyMapper.updateByPrimaryKeySelective(property);
     }
 
     @Override

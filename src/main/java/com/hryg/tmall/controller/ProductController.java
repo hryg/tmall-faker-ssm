@@ -19,7 +19,7 @@ import java.util.List;
  * @author hengrui
  */
 @Controller
-//@RequestMapping("")
+@RequestMapping("")
 public class ProductController {
     @Autowired
     ProductService productService;
@@ -51,8 +51,6 @@ public class ProductController {
 
     @RequestMapping("admin_product_update")
     public String update(Product product) {
-        Date date = productService.get(product.getId()).getCreateDate();
-        product.setCreateDate(date);
         productService.update(product);
         return "redirect:admin_product_list?cid="+product.getCid();
     }
