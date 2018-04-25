@@ -25,6 +25,34 @@ public class PropertyController {
     @Autowired
     CategoryService categoryService;
 
+    @RequestMapping("admin_property_add")
+    public String add(Model model, Property property) {
+        propertyService.add(property);
+        return "redirect:admin_property_list?cid=" + property.getCid();
+    }
+
+    @RequestMapping("admin_property_delete")
+    public String delete(int id) {
+        Property property = propertyService.get(id);
+        propertyService.delete(id);
+        return "redirect:admin_property_list?cid=" + property.getCid();
+    }
+
+    @RequestMapping("admin_property_edit")
+    public String edit(Model model, int id) {
+        Property property = propertyService.get(id);
+        Category category = categoryService.get(property.getCid());
+        property.setCategory(category);
+        model.addAttribute("property", property);
+        return "admin/editProperty";
+    }
+
+    @RequestMapping("admin_property_update")
+    public String update(Property property) {
+        propertyService.update(property);
+        return "redirect:admin_property_list?cid=" + property.getCid();
+    }
+
     @RequestMapping("admin_property_list")
     public String list(int cid, Model model, Page page) {
         Category category = categoryService.get(cid);
