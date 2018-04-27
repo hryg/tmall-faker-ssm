@@ -2,6 +2,7 @@ package com.hryg.tmall.service;
 
 import com.hryg.tmall.pojo.Order;
 import com.hryg.tmall.pojo.OrderItem;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -19,4 +20,6 @@ public interface OrderItemService {
     void fill(List<Order> orders);
 
     void fill(Order order);
+
+    int getSaleCount(int pid);
 }

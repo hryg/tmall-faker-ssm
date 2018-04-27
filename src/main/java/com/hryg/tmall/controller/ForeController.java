@@ -1,13 +1,13 @@
 package com.hryg.tmall.controller;
 
-import com.hryg.tmall.pojo.Category;
-import com.hryg.tmall.pojo.User;
+import com.hryg.tmall.pojo.*;
 import com.hryg.tmall.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.util.HtmlUtils;
 
 import javax.servlet.http.HttpSession;
@@ -29,6 +29,8 @@ public class ForeController {
     OrderService orderService;
     @Autowired
     OrderItemService orderItemService;
+    @Autowired
+    ReviewService reviewService;
 
     @RequestMapping("forehome")
     public String home(Model model) {
@@ -66,4 +68,49 @@ public class ForeController {
             return "fore/login";
         }
     }
+
+    @RequestMapping("forelogout")
+    public String logout(HttpSession session) {
+        session.removeAttribute("user");
+        return "redirect:forehome";
+    }
+
+    @RequestMapping("foreproduct")
+    public String product(int pid, Model model) {
+        Product p = productService.get(pid);
+
+        List<ProductImage> productSingleImages = productImageService.list(p.getId(), ProductImageService.TYPE_SINGLE);
+        List<ProductImage> productDetailImages = productImageService.list(p.getId(), ProductImageService.TYPE_DETAIL);
+        p.setProductSingleImages(productSingleImages);
+        p.setProductDetailImages(productDetailImages);
+
+        List<PropertyValue> pvs = propertyValueService.list(p.getId());
+        List<Review> reviews = reviewService.list(p.getId());
+        productService.setSaleAndReviewNumber(p);
+        model.addAttribute("reviews", reviews);
+        model.addAttribute("p", p);
+        model.addAttribute("pvs", pvs);
+        return "fore/product";
+    }
+
+    @RequestMapping("forecheckLogin")
+    @ResponseBody
+    public String checkLogin(HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        return user == null ? "fail" : "success";
+    }
+
+    @RequestMapping("foreloginAjax")
+    @ResponseBody
+    public String loginAjax(@RequestParam("name") String name, @RequestParam("password") String password, HttpSession session) {
+        name = HtmlUtils.htmlEscape(name);
+        User user = userService.get(name, password);
+
+        if (null == user) {
+            return "fail";
+        }
+        session.setAttribute("user", user);
+        return "success";
+    }
+
 }
