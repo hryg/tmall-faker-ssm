@@ -1,6 +1,7 @@
 package com.hryg.tmall.service;
 
 import com.hryg.tmall.pojo.Order;
+import com.hryg.tmall.pojo.OrderItem;
 
 import java.util.List;
 
@@ -21,4 +22,6 @@ public interface OrderService {
     Order get(int id);
 
     List<Order> list();
+
+    float add(Order order,List<OrderItem> orderItems);
 }
