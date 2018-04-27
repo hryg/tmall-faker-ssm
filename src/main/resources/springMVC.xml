@@ -34,6 +34,10 @@
             <mvc:mapping path="/fore*"/>
             <bean class="com.hryg.tmall.interceptor.LoginInterceptor"/>
         </mvc:interceptor>
+        <mvc:interceptor>
+            <mvc:mapping path="/fore*"/>
+            <bean class="com.hryg.tmall.interceptor.OtherInterceptor"/>
+        </mvc:interceptor>
     </mvc:interceptors>
 
 </beans>
