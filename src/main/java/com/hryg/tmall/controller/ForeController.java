@@ -1,5 +1,6 @@
 package com.hryg.tmall.controller;
 
+import com.github.pagehelper.PageHelper;
 import com.hryg.tmall.pojo.*;
 import com.hryg.tmall.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -115,13 +116,13 @@ public class ForeController {
     }
 
     @RequestMapping("forecategory")
-    public String category(int cid,String sort, Model model) {
+    public String category(int cid, String sort, Model model) {
         Category category = categoryService.get(cid);
         productService.fill(category);
         productService.setSaleAndReviewNumber(category.getProducts());
 
-        if(null!=sort){
-            switch(sort){
+        if (null != sort) {
+            switch (sort) {
                 case "review":
                     Collections.sort(category.getProducts(), (p1, p2) -> p2.getReviewCount() - p1.getReviewCount());
                     break;
@@ -145,4 +146,12 @@ public class ForeController {
         return "fore/category";
     }
 
+    @RequestMapping("foresearch")
+    public String search(String keyword, Model model) {
+        PageHelper.offsetPage(0, 20);
+        List<Product> ps = productService.search(keyword);
+        productService.setSaleAndReviewNumber(ps);
+        model.addAttribute("ps", ps);
+        return "fore/searchResult";
+    }
 }
