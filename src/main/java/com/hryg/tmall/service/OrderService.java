@@ -24,4 +24,6 @@ public interface OrderService {
     List<Order> list();
 
     float add(Order order,List<OrderItem> orderItems);
+
+    List list(int uid, String excludedStatus);
 }
